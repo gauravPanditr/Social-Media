@@ -4,8 +4,6 @@ const apiClient = axios.create({
   baseURL: 'http://localhost:5000',
   timeout: 10000,
 });
-
-
 const request = async <T,D>(
   method: 'get' | 'post' | 'put' | 'delete',
   url: string,

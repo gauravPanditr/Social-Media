@@ -1,13 +1,14 @@
-import './App.css'
+// src/App.tsx
+import React from 'react';
+import MainRoutes from './routes/MainRoutes'; // Importing the routing component
 
-function App() {
-  
-
+const App: React.FC = () => {
   return (
-    <h1 className="text-3xl font-bold underline">
-    Social Media
-  </h1>
-  )
-}
+    <div className="App">
+    
+      <MainRoutes />
+    </div>
+  );
+};
 
-export default App
+export default App;

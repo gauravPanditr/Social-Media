@@ -3,4 +3,12 @@ import { Signup } from '../types/authtypes';
 
 export const signUpUser = async (data: Signup) => {
   return await request<Signup, Signup>('post', '/api/users/register', data);
+  console.log(data);
+};
+
+export const login = async (data: Signup) => {
+       return await request<Signup,Signup>('post','/api/users',data);
+        console.log(data);
+        
+  
 };
