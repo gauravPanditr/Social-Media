@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Input from "../components/Input"; 
-import { signUpUser } from "../api/authapi";
-
+import { signUpUser } from "../apis/authapi";
 
 const Signup: React.FC = () => {
   const [username, setUsername] = useState("");

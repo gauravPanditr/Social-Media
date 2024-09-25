@@ -8,7 +8,6 @@ export const signUpUser = async (data: Signup) => {
 
 export const login = async (data: Signup) => {
        return await request<Signup,Signup>('post','/api/users',data);
-        console.log(data);
-        
+        console.log(data);     
   
 };

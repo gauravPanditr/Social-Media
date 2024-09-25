@@ -1,15 +1,22 @@
 import React from "react";
 
 interface InputProps {
-  label?: string; 
-  type?: string; 
-  placeholder?: string; 
-  required?: boolean; 
-  value?: string; 
+  label?: string;
+  type?: string;
+  placeholder?: string;
+  required?: boolean;
+  value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Input: React.FC<InputProps> = ({ label, type = "text", placeholder, required, value, onChange }) => {
+const Input: React.FC<InputProps> = ({
+  label,
+  type = "text",
+  placeholder,
+  required,
+  value,
+  onChange,
+}) => {
   return (
     <div className="mb-4">
       {label && (
