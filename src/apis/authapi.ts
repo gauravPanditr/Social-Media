@@ -1,13 +1,10 @@
-import request from '../utilits/apiClient';
-import { Signup } from '../types/authtypes';
+// apis/authApi.ts
+import request from '../utilits/apiClient'; // Import your custom Axios instance
+import { Signup } from '../types/authtypes'; // Type for Signup data
 
+// Define the function for signing up a user
 export const signUpUser = async (data: Signup) => {
-  return await request<Signup, Signup>('post', '/api/users/register', data);
-  console.log(data);
-};
-
-export const login = async (data: Signup) => {
-       return await request<Signup,Signup>('post','/api/users',data);
-        console.log(data);     
-  
+  // Correctly call the request function with method and URL as separate arguments
+  const response = await request.post<{ _id: string }>('/users/register', data);
+  return response.data; // Return the response data containing the user ID
 };

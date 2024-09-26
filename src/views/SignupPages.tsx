@@ -1,44 +1,66 @@
-import React, { useState } from "react";
-import Input from "../components/Input"; 
-import { signUpUser } from "../apis/authapi";
+// views/SignupPage.tsx
+import React, { useState } from 'react';
+import { signUpUser } from '../apis/authapi'; // Import the signUpUser API function
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
-const Signup: React.FC = () => {
-  const [username, setUsername] = useState("");
- const [password, setPassword] = useState("");
+const SignupPage: React.FC = () => {
+  const [username, setUsername] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [error, setError] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const navigate = useNavigate(); // Get navigate function
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-     signUpUser({username,password});
-    console.log({ username, password });
+    setError(null);
+    setSuccessMessage(null);
+
+    try {
+      const response = await signUpUser({ username, password });
+      setSuccessMessage(`Signup successful! User ID: ${response._id}`);
+      setUsername('');
+      setPassword('');
+
+      // Navigate to Add Post page
+      navigate('/add-post'); // Use navigate instead of history
+    } catch (error) {
+      console.error('Error during signup:', error);
+      setError('Failed to sign up. Please try again.');
+    }
   };
-  
+
   return (
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto bg-white p-8 mt-10 rounded-lg shadow-md">
-      <h2 className="text-2xl mb-6 text-center">Sign Up</h2>
-      <Input 
-        label="Username" 
-        placeholder="Enter your username" 
-        value={username} 
-        onChange={(e) => setUsername(e.target.value)} 
-        required 
-      />
-    
-      <Input 
-        label="Password" 
-        type="password" 
-        placeholder="Enter your password" 
-        value={password} 
-        onChange={(e) => setPassword(e.target.value)} 
-        required 
-      />
-      <button
-        type="submit"
-        className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-      >
-        Sign Up
-      </button>
-    </form>
+    <div>
+      <h2>Signup</h2>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>
+            Username:
+            <input 
+              type="text" 
+              value={username} 
+              onChange={(e) => setUsername(e.target.value)} 
+              required 
+            />
+          </label>
+        </div>
+        <div>
+          <label>
+            Password:
+            <input 
+              type="password" 
+              value={password} 
+              onChange={(e) => setPassword(e.target.value)} 
+              required 
+            />
+          </label>
+        </div>
+        {error && <div style={{ color: 'red' }}>{error}</div>}
+        {successMessage && <div style={{ color: 'green' }}>{successMessage}</div>}
+        <button type="submit">Sign Up</button>
+      </form>
+    </div>
   );
 };
 
-export default Signup;
+export default SignupPage;
