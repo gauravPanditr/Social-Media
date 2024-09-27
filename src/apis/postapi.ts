@@ -1,4 +1,3 @@
-// apis/postapi.ts
 import axios from 'axios';
 
 export const addPost = async (data: FormData) => {
@@ -26,7 +25,7 @@ export const fetchAllPosts = async () => {
   const response = await axios.get('http://localhost:5000/api/posts/getallposts');
    console.log(response);
    
-  return response.data; // Adjust based on your API response structure
+  return response.data; 
 };
 
 export const likeOrUnlikePost = async (postId: string, userId: string) => {

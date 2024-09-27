@@ -27,7 +27,7 @@ const SignupPage: React.FC = () => {
   
       if (userId) {
         setUserId(userId); // Store user ID in context
-        navigate('/add-post'); // Navigate after sign-up
+        navigate('/home'); // Navigate after sign-up
       } else {
         setError('User ID not found in response');
       }

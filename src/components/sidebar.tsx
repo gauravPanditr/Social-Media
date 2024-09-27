@@ -62,7 +62,7 @@ const Sidebar: React.FC = () => {
                   </li>
                   <li className="mb-4">
                     <Link
-                      to="/post"
+                      to="/add-post"
                       className="block p-2 rounded hover:bg-gray-700"
                     >
                       New Post
