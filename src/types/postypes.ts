@@ -1,10 +1,17 @@
 export interface Like {
-  user: string; // User ID of the person who liked the post
+  user: string; 
+}
+export interface Comment{
+  user: string; 
+
+}
+export interface Post {
+  _id: string; 
+  description: string; 
+  image: string; 
+  likes: Like[]; 
+  comment:Comment[];
+
 }
 
-export interface Post {
-  _id: string; // Unique identifier for the post
-  description: string; // Description of the post
-  image: string; // URL of the post image
-  likes: Like[]; // Array of likes associated with the post
-}
+

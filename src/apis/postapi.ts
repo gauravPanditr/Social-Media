@@ -4,11 +4,11 @@ import axios from 'axios';
 export const addPost = async (data: FormData) => {
   try {
     const response = await axios.post<{ message: string; postId: string }>(
-      'http://localhost:5000/api/posts/addpost', // Change this to your actual endpoint for adding posts
+      'http://localhost:5000/api/posts/addpost', 
       data,
       {
         headers: {
-          'Content-Type': 'multipart/form-data', // Important for file uploads
+          'Content-Type': 'multipart/form-data', 
         },
       }
     );
@@ -35,3 +35,6 @@ export const likeOrUnlikePost = async (postId: string, userId: string) => {
     userid: userId,
   });
 };
+
+
+

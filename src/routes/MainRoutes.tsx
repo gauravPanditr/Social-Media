@@ -7,7 +7,7 @@ import SignUp from '../views/SignupPages';
 import NewPost from '../components/Card'; 
 // Example for another component
 
-const App: React.FC = () => {
+const MainRoutes: React.FC = () => {
     return (
         <Provider store={store}> {/* Redux Provider */}
             <Router>
@@ -22,4 +22,4 @@ const App: React.FC = () => {
     );
 };
 
-export default App;
+export default MainRoutes;
