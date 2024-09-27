@@ -1,63 +1,62 @@
-// views/SignupPage.tsx
 import React, { useState } from 'react';
-import { signUpUser } from '../apis/authapi'; // Import the signUpUser API function
+import axios from 'axios';
+import { useUserContext } from '../context/userContext'; // Import UserContext
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const SignupPage: React.FC = () => {
-  const [username, setUsername] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+  const { setUserId } = useUserContext(); // Access setUserId from context
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
-  const navigate = useNavigate(); // Get navigate function
+  const navigate = useNavigate(); // Initialize navigate
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
-    setSuccessMessage(null);
 
     try {
-      const response = await signUpUser({ username, password });
-      setSuccessMessage(`Signup successful! User ID: ${response._id}`);
-      setUsername('');
-      setPassword('');
-
-      // Navigate to Add Post page
-      navigate('/add-post'); // Use navigate instead of history
-    } catch (error) {
-      console.error('Error during signup:', error);
-      setError('Failed to sign up. Please try again.');
+      const response = await axios.post('http://localhost:5000/api/users/register', {
+        username,
+        password,
+      });
+  
+      console.log('Sign-up response:', response.data); // Log the entire response
+  
+      // Access the MongoDB generated ID
+      const userId = response.data._id; // Assuming the ID is at the root level
+  
+      if (userId) {
+        setUserId(userId); // Store user ID in context
+        navigate('/add-post'); // Navigate after sign-up
+      } else {
+        setError('User ID not found in response');
+      }
+    } catch (err) {
+      console.error('Sign-up error:', err);
+      setError('Failed to sign up.'); // Show error message
     }
   };
 
   return (
-    <div>
-      <h2>Signup</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>
-            Username:
-            <input 
-              type="text" 
-              value={username} 
-              onChange={(e) => setUsername(e.target.value)} 
-              required 
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            Password:
-            <input 
-              type="password" 
-              value={password} 
-              onChange={(e) => setPassword(e.target.value)} 
-              required 
-            />
-          </label>
-        </div>
-        {error && <div style={{ color: 'red' }}>{error}</div>}
-        {successMessage && <div style={{ color: 'green' }}>{successMessage}</div>}
+    <div className="signup-page">
+      <h2>Sign Up</h2>
+      <form onSubmit={handleSignUp}>
+        <input
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          placeholder="Username"
+          required
+        />
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Password"
+          required
+        />
         <button type="submit">Sign Up</button>
+        {error && <div className="error">{error}</div>} {/* Display error message */}
       </form>
     </div>
   );

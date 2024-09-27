@@ -12,7 +12,7 @@ export const addPost = async (data: FormData) => {
         },
       }
     );
-    return response.data; // Return the response data
+    return response.data; 
   } catch (error) {
     if (axios.isAxiosError(error)) {
       throw new Error(error.message);
@@ -20,4 +20,18 @@ export const addPost = async (data: FormData) => {
       throw new Error('An unexpected error occurred');
     }
   }
+};
+
+export const fetchAllPosts = async () => {
+  const response = await axios.get('http://localhost:5000/api/posts/getallposts');
+   console.log(response);
+   
+  return response.data; // Adjust based on your API response structure
+};
+
+export const likeOrUnlikePost = async (postId: string, userId: string) => {
+  await axios.post('http://localhost:5000/api/posts/likeorunlikepost', {
+    postid: postId,
+    userid: userId,
+  });
 };

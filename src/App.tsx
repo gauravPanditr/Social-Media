@@ -1,25 +1,23 @@
-// App.tsx
+
 import React from 'react';
-// import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-// Adjust the path according to your structure
-import SignUp from './views/SignupPages';
-import NewPost from './views/NewPost'; 
-// Example for another component
+import { UserProvider } from './context/userContext'; // Import UserProvider
+import SignupPage from './views/SignupPages';
+import AddPostPage from './views/NewPost';
+import PostsList from './views/Home';
 
 const App: React.FC = () => {
-    return (
-      
-            <Router>
-                <Routes>
-                    <Route path="/signup" element={<SignUp />} />
-                   
-                    <Route path="/add-post" element={<NewPost/>} />
-                    {/* Add other routes as necessary */}
-                </Routes>
-            </Router>
-      
-    );
+  return (
+    <UserProvider> {/* Wrap your application with UserProvider */}
+      <Router>
+        <Routes>
+          <Route path="/postlist" element={<PostsList />} />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/add-post" element={<AddPostPage />} />
+        </Routes>
+      </Router>
+    </UserProvider>
+  );
 };
 
 export default App;
